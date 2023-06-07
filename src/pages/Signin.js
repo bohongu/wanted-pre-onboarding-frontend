@@ -15,7 +15,6 @@ function Signin() {
       const data = await api.post("/auth/signin", { email, password });
 
       if (data.status === 200) {
-        console.log(data);
         localStorage.setItem("token", data.data.access_token);
         navigate("/todo");
       }
@@ -36,14 +35,12 @@ function Signin() {
         <input
           type="email"
           data-testid="email-input"
-          name="email"
           value={email}
           onChange={onEmailChange}
         />
         <input
           type="password"
           data-testid="password-input"
-          name="password"
           value={password}
           onChange={onPasswordChange}
         />
