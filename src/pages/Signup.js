@@ -1,43 +1,21 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
-const BASE_URL = "https://www.pre-onboarding-selection-task.shop";
+import useAuth from "../hooks/useAuth";
+import api from "../apis/api";
 
 function Signup() {
   const navigate = useNavigate();
-  const [disabled, setDisabled] = useState(true);
-  const [inputs, setInputs] = useState({
-    email: "",
-    password: "",
-  });
-
-  const { email, password } = inputs;
-
-  const onChange = (event) => {
-    const { value, name } = event.target;
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
+  const { email, password, disabled, onEmailChange, onPasswordChange } =
+    useAuth();
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      const { status } = await axios.post(
-        `${BASE_URL}/auth/signup`,
-        {
-          email,
-          password,
-        },
-        { headers: { "Content-Type": "application/json" } }
-      );
-      if (status === 201) {
+      const data = await api.post("/auth/signup", { email, password });
+
+      if (data.status === 201) {
         navigate("/signin");
-      } else {
-        alert("회원가입이 실패하였습니다.");
       }
     } catch (error) {
       console.error(error);
@@ -50,12 +28,6 @@ function Signup() {
     }
   }, [navigate]);
 
-  useEffect(() => {
-    const isEmailValid = email.includes("@");
-    const isPasswordValid = password.length >= 8;
-    setDisabled(!(isEmailValid && isPasswordValid));
-  }, [email, password]);
-
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -64,14 +36,14 @@ function Signup() {
           data-testid="email-input"
           name="email"
           value={email}
-          onChange={onChange}
+          onChange={onEmailChange}
         />
         <input
           type="password"
           data-testid="password-input"
           name="password"
           value={password}
-          onChange={onChange}
+          onChange={onPasswordChange}
         />
         <button data-testid="signup-button" disabled={disabled}>
           회원가입
