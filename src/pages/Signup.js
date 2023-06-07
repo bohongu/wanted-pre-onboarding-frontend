@@ -34,14 +34,12 @@ function Signup() {
         <input
           type="email"
           data-testid="email-input"
-          name="email"
           value={email}
           onChange={onEmailChange}
         />
         <input
           type="password"
           data-testid="password-input"
-          name="password"
           value={password}
           onChange={onPasswordChange}
         />
