@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import authApi from "../apis/authApi";
+import styled from "styled-components";
 
 function Todo() {
   const navigate = useNavigate();
@@ -106,19 +107,19 @@ function Todo() {
   };
 
   return (
-    <>
-      <input
+    <Wrapper>
+      <Input
         type="text"
         data-testid="new-todo-input"
         value={newTodo}
         onChange={onChange}
       />
-      <button data-testid="new-todo-add-button" onClick={onAddTodo}>
+      <Button data-testid="new-todo-add-button" onClick={onAddTodo}>
         추가
-      </button>
-      <ul>
+      </Button>
+      <TodoList>
         {todoList.map((todo) => (
-          <li key={todo.id}>
+          <TodoItem key={todo.id}>
             <label>
               <input
                 type="checkbox"
@@ -130,49 +131,125 @@ function Todo() {
             </label>
             {editId === todo.id ? (
               <>
-                <input
+                <EditInput
                   type="text"
                   value={editTodo}
                   onChange={onModifyChange}
                   data-testid="modify-input"
                 />
-                <button
+                <TodoButton
                   onClick={() => onSubmitEdit(todo.id, todo.isCompleted)}
                   data-testid="submit-button"
                 >
                   제출
-                </button>
-                <button
+                </TodoButton>
+                <TodoButton
                   onClick={() => downEditMode()}
                   data-testid="cancel-button"
                 >
                   취소
-                </button>
+                </TodoButton>
               </>
             ) : (
               <>
-                <span>{todo.todo}</span>
-                <button
-                  data-testid="modify-button"
-                  onClick={() => {
-                    editMode(todo.id, todo.todo);
-                  }}
-                >
-                  수정
-                </button>
-                <button
-                  data-testid="delete-button"
-                  onClick={() => onDeleteTodo(todo.id)}
-                >
-                  삭제
-                </button>
+                <TodoText>{todo.todo}</TodoText>
+                <Buttons>
+                  <TodoButton
+                    data-testid="modify-button"
+                    onClick={() => {
+                      editMode(todo.id, todo.todo);
+                    }}
+                  >
+                    수정
+                  </TodoButton>
+                  <TodoButton
+                    data-testid="delete-button"
+                    onClick={() => onDeleteTodo(todo.id)}
+                  >
+                    삭제
+                  </TodoButton>
+                </Buttons>
               </>
             )}
-          </li>
+          </TodoItem>
         ))}
-      </ul>
-    </>
+      </TodoList>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  width: 15rem;
+  height: 2.5rem;
+  margin-bottom: 5px;
+`;
+
+const Button = styled.button`
+  cursor: pointer;
+  height: 2.5rem;
+  background: #a5d8ff;
+  border: none;
+  width: 15rem;
+
+  &:hover {
+    background: #74c0fc;
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+`;
+
+const TodoList = styled.ul`
+  width: 30rem;
+  list-style-type: none;
+`;
+
+const TodoItem = styled.li`
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+`;
+
+const EditInput = styled.input`
+  height: 100%;
+  width: 80%;
+`;
+
+const TodoButton = styled.button`
+  cursor: pointer;
+  background: #a5d8ff;
+  border: none;
+  &:hover {
+    background: #74c0fc;
+  }
+
+  &:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+  }
+
+  height: 2.5rem;
+  width: 3rem;
+  margin-right: 4px;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+`;
+
+const TodoText = styled.div`
+  margin-left: 8px;
+  width: 80%;
+`;
 
 export default Todo;

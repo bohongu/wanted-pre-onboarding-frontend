@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import api from "../apis/api";
+import { Button, Form, Input, Title, Wrapper } from "./Signup";
 
 function Signin() {
   const navigate = useNavigate();
@@ -30,25 +31,26 @@ function Signin() {
   }, [navigate]);
 
   return (
-    <div>
-      <form onSubmit={onSubmit}>
-        <input
+    <Wrapper>
+      <Form onSubmit={onSubmit}>
+        <Title>로그인</Title>
+        <Input
           type="email"
           data-testid="email-input"
           value={email}
           onChange={onEmailChange}
         />
-        <input
+        <Input
           type="password"
           data-testid="password-input"
           value={password}
           onChange={onPasswordChange}
         />
-        <button data-testid="signin-button" disabled={disabled}>
+        <Button data-testid="signin-button" disabled={disabled}>
           로그인
-        </button>
-      </form>
-    </div>
+        </Button>
+      </Form>
+    </Wrapper>
   );
 }
 
