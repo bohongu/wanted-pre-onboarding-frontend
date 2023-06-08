@@ -40,6 +40,9 @@ function Todo() {
   };
 
   const onAddTodo = async (event) => {
+    if (!newTodo) {
+      return;
+    }
     try {
       const data = await authApi.post(
         "/todos",
