@@ -17,7 +17,9 @@ function Todo() {
   }, [navigate]);
 
   useEffect(() => {
-    getTodos();
+    if (localStorage.getItem("token")) {
+      getTodos();
+    }
   }, []);
 
   const onChange = (event) => {
