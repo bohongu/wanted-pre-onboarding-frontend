@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import api from "../apis/api";
-import { Button, Form, Input, Title, Wrapper } from "./Signup";
+import { Bottom, Button, Div, Form, Input, Title, Wrapper } from "./Signup";
 
 function Signin() {
   const navigate = useNavigate();
@@ -39,16 +39,21 @@ function Signin() {
           data-testid="email-input"
           value={email}
           onChange={onEmailChange}
+          placeholder="Email"
         />
         <Input
           type="password"
           data-testid="password-input"
           value={password}
           onChange={onPasswordChange}
+          placeholder="Password"
         />
         <Button data-testid="signin-button" disabled={disabled}>
           로그인
         </Button>
+        <Bottom>
+          <Div onClick={() => navigate("/signup")}>회원가입 하러가기</Div>
+        </Bottom>
       </Form>
     </Wrapper>
   );

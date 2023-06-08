@@ -16,6 +16,7 @@ function Signup() {
       const data = await api.post("/auth/signup", { email, password });
 
       if (data.status === 201) {
+        alert("회원가입이 성공하였습니다.");
         navigate("/signin");
       }
     } catch (error) {
@@ -38,16 +39,21 @@ function Signup() {
           data-testid="email-input"
           value={email}
           onChange={onEmailChange}
+          placeholder="Email"
         />
         <Input
           type="password"
           data-testid="password-input"
           value={password}
           onChange={onPasswordChange}
+          placeholder="Password"
         />
         <Button data-testid="signup-button" disabled={disabled}>
           회원가입
         </Button>
+        <Bottom>
+          <Div onClick={() => navigate("/signin")}>로그인 하러가기</Div>
+        </Bottom>
       </Form>
     </Wrapper>
   );
@@ -79,7 +85,7 @@ export const Title = styled.h1`
 export const Input = styled.input`
   height: 2.5rem;
   padding: 5px;
-  font-size: 20px;
+  font-size: 16px;
   width: 100%;
 `;
 
@@ -97,6 +103,16 @@ export const Button = styled.button`
   &:disabled {
     background: #ccc;
     cursor: not-allowed;
+  }
+`;
+
+export const Bottom = styled.div``;
+
+export const Div = styled.div`
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    color: #74c0fc;
   }
 `;
 
