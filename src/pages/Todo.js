@@ -28,6 +28,11 @@ function Todo() {
     setEditTodo(event.target.value);
   };
 
+  const onLogOut = () => {
+    localStorage.clear();
+    navigate("/signin");
+  };
+
   const getTodos = async () => {
     try {
       const data = await authApi.get("/todos");
@@ -111,15 +116,21 @@ function Todo() {
 
   return (
     <Wrapper>
-      <Input
-        type="text"
-        data-testid="new-todo-input"
-        value={newTodo}
-        onChange={onChange}
-      />
-      <Button data-testid="new-todo-add-button" onClick={onAddTodo}>
-        추가
-      </Button>
+      <Title>TODO</Title>
+      <Form>
+        <Top>
+          <LogOut onClick={onLogOut}>로그아웃</LogOut>
+        </Top>
+        <Input
+          type="text"
+          data-testid="new-todo-input"
+          value={newTodo}
+          onChange={onChange}
+        />
+        <Button data-testid="new-todo-add-button" onClick={onAddTodo}>
+          추가
+        </Button>
+      </Form>
       <TodoList>
         {todoList.map((todo) => (
           <TodoItem key={todo.id}>
@@ -186,6 +197,29 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Title = styled.h1`
+  text-decoration: underline;
+`;
+
+const Form = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Top = styled.div`
+  display: flex;
+  justify-content: end;
+  margin-bottom: 15px;
+`;
+
+const LogOut = styled.span`
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
 `;
 
 const Input = styled.input`
