@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import authApi from "../apis/authApi";
 import styled from "styled-components";
+import api from "../apis/api";
 
 function TodoItems({ getTodos, todo }) {
   const [editId, setEditId] = useState(null);
@@ -12,7 +12,7 @@ function TodoItems({ getTodos, todo }) {
 
   const onDeleteTodo = async (id) => {
     try {
-      const data = await authApi.delete(`/todos/${id}`);
+      const data = await api.delete(`/todos/${id}`);
       if (data.status === 204) {
         getTodos();
       }
@@ -21,18 +21,10 @@ function TodoItems({ getTodos, todo }) {
 
   const onUpdateTodo = async (id, todo, isCompleted) => {
     try {
-      const data = await authApi.put(
-        `/todos/${id}`,
-        {
-          todo,
-          isCompleted,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const data = await api.put(`/todos/${id}`, {
+        todo,
+        isCompleted,
+      });
 
       if (data.status === 200) {
         getTodos();

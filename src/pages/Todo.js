@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import authApi from "../apis/authApi";
 import styled from "styled-components";
 import TodoForm from "../components/TodoForm";
 import TodoLists from "../components/TodoLists";
+import api from "../apis/api";
 
 function Todo() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ function Todo() {
 
   const getTodos = async () => {
     try {
-      const data = await authApi.get("/todos");
+      const data = await api.get("/todos");
       if (data.status === 200) {
         setTodoList(data.data);
       }

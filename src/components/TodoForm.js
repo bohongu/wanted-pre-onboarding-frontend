@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import authApi from "../apis/authApi";
 import styled from "styled-components";
+import api from "../apis/api";
 
 function TodoForm({ getTodos }) {
   const navigate = useNavigate();
@@ -21,15 +21,7 @@ function TodoForm({ getTodos }) {
       return;
     }
     try {
-      const data = await authApi.post(
-        "/todos",
-        { todo: newTodo },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const data = await api.post("/todos", { todo: newTodo });
       if (data.status === 201) {
         getTodos();
         setNewTodo("");
