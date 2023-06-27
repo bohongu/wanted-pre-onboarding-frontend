@@ -10,7 +10,7 @@
 
 ```
 $ npm install
-% npm start
+$ npm start
 ```
 
 ## 배포링크
